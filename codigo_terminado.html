@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños Mi Amor! ❤️</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        gold: {
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        handwriting: ['"Dancing Script"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Modern Animated Mesh Gradient Background */
+        body {
+            background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fecdd3, #fff5f6);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+        
+        .envelope {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 25px 50px -12px rgba(225, 29, 72, 0.35);
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .envelope:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid #fb7185;
+            border-right: 160px solid #fb7185;
+            border-top: 110px solid transparent;
+            border-bottom: 110px solid #fb7185;
+            border-radius: 0 0 16px 16px;
+            z-index: 3;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 120px solid #9f1239;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out, z-index 0.6s ease;
+            z-index: 4;
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            right: 15px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(0);
+            max-height: 280px;
+            overflow-y: auto;
+            border: 1px solid rgba(254, 205, 211, 0.6);
+        }
+
+        .envelope.open .letter {
+            opacity: 1;
+            transform: translateY(-165px);
+            z-index: 5;
+        }
+
+        .heart-particle, .tulip-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUp 7s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.3) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 40px -15px rgba(244, 63, 94, 0.1);
+        }
+
+        .flip-card {
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 1.25rem;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Spring-Like Dynamic Scroll Animation (Fade-In and Fade-Out) */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(80px) scale(0.92);
+            transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .letter::-webkit-scrollbar {
+            width: 4px;
+        }
+        .letter::-webkit-scrollbar-thumb {
+            background: #fda4af;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased relative selection:bg-rose-500 selection:text-white">
+
+    <!-- Floating Background Hearts & Dust Particles Container -->
+    <div id="hearts-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <!-- Music Control Floating Button -->
+    <div class="fixed top-5 right-5 z-50">
+        <button id="bgm-toggle" class="glass-card p-3 rounded-full shadow-2xl text-rose-600 hover:scale-110 transition-transform duration-300 flex items-center justify-center w-14 h-14 focus:outline-none border-2 border-rose-200/50">
+            <i class="fas fa-music text-2xl" id="music-icon"></i>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center p-6 relative z-10">
+        <div class="animate-bounce mb-4 text-rose-500">
+            <i class="fas fa-heart text-5xl sm:text-6xl drop-shadow-lg"></i>
+        </div>
+        <span class="text-xs sm:text-sm tracking-widest uppercase font-bold text-rose-600 mb-3 glass-card px-5 py-2 rounded-full shadow-sm border border-rose-200">
+            Un detalle hecho con todo mi amor 🌷
+        </span>
+        <h1 class="font-serif text-5xl sm:text-7xl md:text-8xl font-bold text-gray-900 mb-4 tracking-tight leading-none drop-shadow-sm">
+            ¡Feliz Cumpleaños, <br class="sm:hidden"><span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-rose-500 to-rose-400">Mi Vida!</span> 🎉
+        </h1>
+        <p class="font-handwriting text-3xl sm:text-4xl text-rose-700 max-w-xl mb-10">
+            Hoy celebramos el día en que nació la persona que ilumina cada uno de mis días.
+        </p>
+
+        <!-- Dynamic Counter -->
+        <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl max-w-md w-full mb-10 border border-white/80">
+            <h3 class="text-xs sm:text-sm font-bold uppercase text-rose-500 mb-4 tracking-widest">Tiempo compartiendo sonrisas juntos</h3>
+            <div id="counter" class="grid grid-cols-4 gap-3 text-center">
+                <div class="p-3 bg-rose-50/80 rounded-2xl border border-rose-100">
+                    <span id="days" class="text-2xl sm:text-4xl font-extrabold text-rose-600">00</span>
+                    <span class="block text-xs text-gray-500 font-semibold mt-1">Días</span>
+                </div>
+                <div class="p-3 bg-rose-50/80 rounded-2xl border border-rose-100">
+                    <span id="hours" class="text-2xl sm:text-4xl font-extrabold text-rose-600">00</span>
+                    <span class="block text-xs text-gray-500 font-semibold mt-1">Horas</span>
+                </div>
+                <div class="p-3 bg-rose-50/80 rounded-2xl border border-rose-100">
+                    <span id="minutes" class="text-2xl sm:text-4xl font-extrabold text-rose-600">00</span>
+                    <span class="block text-xs text-gray-500 font-semibold mt-1">Min</span>
+                </div>
+                <div class="p-3 bg-rose-50/80 rounded-2xl border border-rose-100">
+                    <span id="seconds" class="text-2xl sm:text-4xl font-extrabold text-rose-600">00</span>
+                    <span class="block text-xs text-gray-500 font-semibold mt-1">Seg</span>
+                </div>
+            </div>
+        </div>
+
+        <a href="#letter-section" class="inline-flex items-center gap-3 bg-gradient-to-r from-rose-500 via-rose-600 to-rose-700 text-white font-semibold text-lg px-9 py-4 rounded-full shadow-xl shadow-rose-500/30 hover:scale-105 transition-all duration-300">
+            Descubrir tu sorpresa <i class="fas fa-chevron-down text-sm animate-bounce"></i>
+        </a>
+    </section>
+
+    <!-- Interactive Letter Section -->
+    <section id="letter-section" class="min-h-screen flex flex-col justify-center items-center p-6 relative z-10 py-16">
+        <div class="text-center mb-12">
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-gray-900 mb-3">Una Carta Para Ti 💌</h2>
+            <p class="text-gray-600 text-sm sm:text-base">Haz clic en el sobre para abrir la carta especial que escribí para ti</p>
+        </div>
+
+        <div class="envelope-wrapper my-8">
+            <div class="envelope" id="envelope" onclick="toggleEnvelope()">
+                <div class="envelope-flap"></div>
+                <div class="absolute inset-0 flex items-center justify-center z-10" id="seal-icon">
+                    <div class="w-14 h-14 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full flex items-center justify-center shadow-lg border-2 border-amber-200 text-rose-950 font-bold text-xl">
+                        ❤️
+                    </div>
+                </div>
+                <div class="letter text-gray-800" id="letter-content">
+                    <p class="font-handwriting text-2xl text-rose-600 mb-3 font-bold">Para ti, mi amorcito ❤️</p>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans mb-3">
+                        En este día tan especial quiero dedicarte estas palabras que nacen desde lo más profundo de mi corazón. Quiero recordarte lo inmensamente importante que eres para mí y lo afortunado que me siento de compartir mi vida a tu lado.
+                    </p>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans mb-3">
+                        Estoy profundamente orgulloso de la hermosa, brillante y perfecta mujer que eres. Tu fuerza, tu dulzura y tu bondad me inspiran todos los días a ser una mejor persona.
+                    </p>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans mb-3">
+                        Gracias por estar siempre a mi lado, por regalarme tu amor sincero y por llenar mis días de una felicidad absoluta. Quiero recordar que siempre estaré a tu lado para cuidarte, escucharte y apoyarte en absolutamente todo lo que necesites y sueñes.
+                    </p>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans mb-3">
+                        Deseo que este nuevo año de vida venga repleto de alegrías y sueños cumplidos. Te amo con toda mi alma.
+                    </p>
+                    <p class="font-handwriting text-xl text-rose-600 text-right mt-4 font-bold">Con todo mi amor siempre ✨</p>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-xs text-rose-500 mt-16 font-semibold animate-pulse tracking-wide">
+            (Toca el sobre para abrirlo o cerrarlo)
+        </p>
+    </section>
+
+    <!-- Reasons Why I Love You Interactive Section (9 Cards) -->
+    <section class="max-w-5xl mx-auto px-6 py-16 relative z-10">
+        <div class="text-center mb-12">
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-gray-900 mb-3">Lo Que Más Amo De Ti 💖</h2>
+            <p class="text-gray-600 text-sm sm:text-base">Toca cada tarjeta para descubrir las razones de mi amor por ti</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border border-rose-200">
+                        <span class="text-4xl mb-3">🌟</span>
+                        <h3 class="font-bold text-rose-600 text-lg">Tu Esencia Inigualable</h3>
+                        <span class="text-xs text-rose-400 mt-2 font-medium">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-medium leading-relaxed">Amo cómo logras convertir cualquier día ordinario en un momento mágico e inolvidable con solo estar presente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border border-rose-200">
+                        <span class="text-4xl mb-3">😊</span>
+                        <h3 class="font-bold text-rose-600 text-lg">Tu Hermosa Sonrisa</h3>
+                        <span class="text-xs text-rose-400 mt-2 font-medium">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-medium leading-relaxed">Por la paz increíble que me transmite tu sonrisa en cualquier momento del día.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border border-rose-200">
+                        <span class="text-4xl mb-3">🤗</span>
+                        <h3 class="font-bold text-rose-600 text-lg">Tu Dulce Apoyo</h3>
+                        <span class="text-xs text-rose-400 mt-2 font-medium">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-medium leading-relaxed">Por la manera tan sincera y tierna con la que me escuchas, me abrazas y caminas a mi lado.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border border-rose-200">
+                        <span class="text-4xl mb-3">👑</span>
+                        <h3 class="font-bold text-rose-600 text-lg">Tu Gran Fortaleza</h3>
+                        <span class="text-xs text-rose-400 mt-2 font-medium">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-medium leading-relaxed">Por ser una mujer fuerte, decidida e inspiradora que nunca se rinde ante nada.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border border-rose-200">
+                        <span class="text-4xl mb-3">✨</span>
+                        <h3 class="font-bold text-rose-600 text-lg">Tu Bondad Infinita</h3>
+                        <span class="text-xs text-rose-400 mt-2 font-medium">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-medium leading-relaxed">Por el corazón tan grande que tienes y el amor con el que tratas a todos los que te aman.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border border-rose-200">
+                        <span class="text-4xl mb-3">🎈</span>
+                        <h3 class="font-bold text-rose-600 text-lg">Nuestra Complicidad</h3>
+                        <span class="text-xs text-rose-400 mt-2 font-medium">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-medium leading-relaxed">Por nuestras risas espontáneas y por hacer de cada momento juntos un recuerdo maravilloso.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border border-rose-200">
+                        <span class="text-4xl mb-3">🌺</span>
+                        <h3 class="font-bold text-rose-600 text-lg">Tu Luz Propia</h3>
+                        <span class="text-xs text-rose-400 mt-2 font-medium">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-medium leading-relaxed">Por la paz y la calidez que me brindas; a tu lado aprendí el significado de sentirme verdaderamente en hogar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border-2 border-rose-400 bg-rose-50/60">
+                        <span class="text-4xl mb-3">💍</span>
+                        <h3 class="font-bold text-rose-600 text-lg">Nuestro Futuro</h3>
+                        <span class="text-xs text-rose-500 mt-2 font-bold">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-600 to-rose-700 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-semibold leading-relaxed">Porque mi deseo más grande es seguir construyendo una vida entera juntos, celebrando cada uno de tus logros y amándote en cada paso del camino.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card h-52 cursor-pointer" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front glass-card shadow-lg flex flex-col items-center justify-center p-5 border-2 border-rose-400 bg-rose-50/60">
+                        <span class="text-4xl mb-3">♾️</span>
+                        <h3 class="font-bold text-rose-600 text-lg">El Amor De Mi Vida</h3>
+                        <span class="text-xs text-rose-500 mt-2 font-bold">Haz clic para descubrir</span>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-600 to-rose-800 text-white shadow-xl flex items-center justify-center p-6 text-center">
+                        <p class="text-sm font-semibold leading-relaxed">Porque contigo lo tengo absolutamente todo. Gracias por existir y por ser la mejor decisión y el regalo más hermoso de mi vida. ¡Feliz cumpleaños, mi reina! ❤️</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Surprise Trigger Button Section -->
+    <section class="max-w-2xl mx-auto px-6 py-12 text-center relative z-10">
+        <div class="glass-card rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden border-2 border-rose-300">
+            <span class="text-4xl mb-3 block animate-bounce">🌷 🎁 🌷</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-gray-900 mb-4">¿Lista para tu sorpresa especial?</h2>
+            <p class="text-gray-600 mb-8 text-sm sm:text-base leading-relaxed">
+                ¡Presiona el botón de abajo para revelar la galería de tus virtudes en una lluvia de tulipanes y confeti!
+            </p>
+
+            <button onclick="triggerSurprise()" class="w-full sm:w-auto bg-gradient-to-r from-rose-500 via-rose-600 to-rose-700 text-white font-bold text-lg px-10 py-4.5 rounded-full shadow-2xl shadow-rose-500/50 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 mx-auto">
+                <i class="fas fa-gift text-2xl animate-spin"></i>
+                ¡Presióname para la Sorpresa! 🌷
+            </button>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section (Hidden by default, Revealed on Button Click) -->
+    <section id="gallery-section" class="max-w-4xl mx-auto px-6 py-16 relative z-10 hidden">
+        <div class="text-center mb-16">
+            <span class="text-xs sm:text-sm tracking-widest uppercase font-semibold text-rose-600 mb-2 glass-card px-4 py-1.5 rounded-full inline-block">
+                Recorrido de Amor y Admiración 🌷
+            </span>
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-gray-900 mb-4">La Galería de Tu Hermosa Esencia 📸</h2>
+            <p class="text-gray-600 text-sm sm:text-base max-w-xl mx-auto">
+                Desliza suavemente hacia abajo para ver cada momento y cada una de tus cualidades desvelarse una por una...
+            </p>
+        </div>
+
+        <div class="space-y-24">
+            <!-- 15 Photo Cards (Continuous Fade In / Fade Out Scroll Animation) -->
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.05 PM.jpeg', 'Estoy inmensamente orgulloso de la persona maravillosa en la que te conviertes cada día 🌸')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.05 PM.jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Crecimiento Constante</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Estoy inmensamente orgulloso de la persona maravillosa en la que te conviertes cada día 🌸
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row-reverse items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.06 PM (1).jpeg', 'Admiro profundamente tu inteligencia, tu madurez y la luz tan hermosa que transmites ✨')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.06 PM (1).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Inteligencia y Luz</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Admiro profundamente tu inteligencia, tu madurez y la luz tan hermosa que transmites ✨
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.06 PM (2).jpeg', 'Eres la mujer más hermosa, fuerte y auténtica que he conocido en toda mi vida 💖')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.06 PM (2).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Autenticidad Única</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Eres la mujer más hermosa, fuerte y auténtica que he conocido en toda mi vida 💖
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row-reverse items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.07 PM (2).jpeg', 'Amo la dulzura inagotable y el corazón tan puro y noble que tienes 🌹')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.07 PM (2).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Dulzura Infinita</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Amo la dulzura inagotable y el corazón tan puro y noble que tienes 🌹
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.07 PM (3).jpeg', 'Tu sonrisa perfecta tiene el poder maravilloso de alegrar cualquier lugar donde estés 😊')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.07 PM (3).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Sonrisa Mágica</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Tu sonrisa perfecta tiene el poder maravilloso de alegrar cualquier lugar donde estés 😊
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row-reverse items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.07 PM.jpeg', 'Me llena de orgullo ver la determinación y valentía con la que logras todo lo que te propones 🌟')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.07 PM.jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Determinación Inquebrantable</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Me llena de orgullo ver la determinación y valentía con la que logras todo lo que te propones 🌟
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.08 PM (1).jpeg', 'Tu elegancia natural y tu bondad única hacen que seas absolutamente perfecta para mí 👑')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.08 PM (1).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Elegancia Natural</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Tu elegancia natural y tu bondad única hacen que seas absolutamente perfecta para mí 👑
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row-reverse items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.08 PM.jpeg', 'Admiro la belleza de tu mirada y la tranquilidad paz tan bella que transmites a mi vida 💫')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.08 PM.jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">La Paz de tu Mirada</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Admiro la belleza de tu mirada y la tranquilidad paz tan bella que transmites a mi vida 💫
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.09 PM (1).jpeg', 'Eres una mujer talentosa, admirable y con una luz propia que nadie puede apagar 🎨')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.09 PM (1).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Talento Brillante</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Eres una mujer talentosa, admirable y con una luz propia que nadie puede apagar 🎨
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row-reverse items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.09 PM (2).jpeg', 'Amo la creatividad, el carisma y la alegría desbordante con la que disfrutas cada instante ☀️')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.09 PM (2).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Carisma y Alegría</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Amo la creatividad, el carisma y la alegría desbordante con la que disfrutas cada instante ☀️
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.09 PM.jpeg', 'Tu sencillez y la calidez de tu forma de ser me hacen enamorarme cada día más de ti 💐')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.09 PM.jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Humildad y Calidez</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Tu sencillez y la calidez de tu forma de ser me hacen enamorarme cada día más de ti 💐
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row-reverse items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.10 PM (1).jpeg', 'Eres increíblemente inteligente, sagaz y capaz de superar cualquier reto que se te presente 🧠')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.10 PM (1).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Astucia y Sagacidad</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Eres increíblemente inteligente, sagaz y capaz de superar cualquier reto que se te presente 🧠
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.10 PM (2).jpeg', 'Me llena de orgullo ver la pasión tan inmensa que pones en cada detalle que realizas 🔥')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.10 PM (2).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Pasión Total</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Me llena de orgullo ver la pasión tan inmensa que pones en cada detalle que realizas 🔥
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row-reverse items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.10 PM (3).jpeg', 'Tu gran sentido del humor y tu chispa única hacen que la vida a tu lado sea maravillosa 🎈')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.10 PM (3).jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Tu Chispa Divina</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Tu gran sentido del humor y tu chispa única hacen que la vida a tu lado sea maravillosa 🎈
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal glass-card p-4 sm:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-6 sm:gap-8 border-2 border-rose-200">
+                <div class="w-full md:w-1/2 h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer" onclick="openModal('imagenes/WhatsApp Image 2026-11-07 at 12.58.10 PM.jpeg', 'Eres mi persona favorita en el universo, tan hermosa por fuera como por dentro 💞')">
+                    <img src="imagenes/WhatsApp Image 2026-11-07 at 12.58.10 PM.jpeg" alt="Recuerdo juntos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Mi Persona Favorita</h3>
+                    <p class="text-gray-700 font-medium text-base sm:text-lg leading-relaxed">
+                        Eres mi persona favorita en el universo, tan hermosa por fuera como por dentro 💞
+                    </p>
+                </div>
+            </div>
+
+            <!-- Final Grand Finale Closing Card (Without Title Header) -->
+            <div class="scroll-reveal bg-gradient-to-br from-rose-600 via-rose-700 to-rose-900 text-white p-8 sm:p-14 rounded-3xl shadow-2xl text-center relative overflow-hidden border-4 border-amber-300">
+                <div class="absolute -top-10 -right-10 text-9xl opacity-10">🌷</div>
+                <div class="absolute -bottom-10 -left-10 text-9xl opacity-10">👑</div>
+                
+                <span class="text-6xl mb-6 block drop-shadow-md">🌷 👑 🌷</span>
+                <p class="font-handwriting text-2xl sm:text-4xl leading-relaxed mb-6 text-amber-100 font-bold">
+                    "Eres y serás siempre la reina de mi corazón y el amor de mi vida. Gracias por existir y por hacerme el hombre más feliz del mundo a tu lado. ¡Feliz Cumpleaños, mi amorcito!"
+                </p>
+                <div class="w-28 h-1 bg-amber-300 mx-auto rounded-full my-6"></div>
+                <span class="font-sans font-extrabold uppercase tracking-widest text-xs sm:text-sm text-rose-200">Por siempre y para siempre a tu lado ❤️</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Lightbox for Fullscreen Image View -->
+    <div id="image-modal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4 cursor-pointer backdrop-blur-md" onclick="closeModal()">
+        <div class="max-w-3xl w-full text-center relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white text-4xl hover:text-rose-400 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="modal-img" src="" alt="Foto ampliada" class="max-h-[75vh] mx-auto rounded-2xl shadow-2xl border-2 border-rose-300/40 object-contain">
+            <p id="modal-caption" class="text-white font-serif text-lg sm:text-2xl mt-6 px-4 font-medium leading-relaxed"></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-10 relative z-10 text-gray-500 text-xs sm:text-sm font-medium">
+        <p class="flex items-center justify-center gap-1.5">
+            Hecho con <i class="fas fa-heart text-rose-500 animate-pulse"></i> exclusivamente para ti en tu día especial.
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Floating Hearts Background Generator
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartIcons = ['❤️', '💖', '💕', '💗', '🌸', '✨'];
+            
+            for(let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDuration = `${5 + Math.random() * 5}s`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.fontSize = `${16 + Math.random() * 22}px`;
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        // Floating Tulips burst animation
+        function createTulipBurst() {
+            const container = document.getElementById('hearts-container');
+            const tulipIcons = ['🌷', '🌸', '💐', '🌷', '✨'];
+            
+            for(let i = 0; i < 35; i++) {
+                const tulip = document.createElement('div');
+                tulip.className = 'tulip-particle';
+                tulip.innerText = tulipIcons[Math.floor(Math.random() * tulipIcons.length)];
+                tulip.style.left = `${Math.random() * 100}%`;
+                tulip.style.animationDuration = `${4 + Math.random() * 4}s`;
+                tulip.style.fontSize = `${24 + Math.random() * 24}px`;
+                container.appendChild(tulip);
+                
+                setTimeout(() => tulip.remove(), 8000);
+            }
+        }
+
+        // Relationship Counter Starting: 8 de septiembre de 2024
+        const startDate = new Date(2024, 8, 8); 
+
+        function updateCounter() {
+            const now = new Date();
+            const difference = now - startDate;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((difference / (1000 * 60)) % 60);
+                const seconds = Math.floor((difference / 1000) % 60);
+
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            }
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        // Envelope Toggle Functionality
+        function toggleEnvelope() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.toggle('open');
+        }
+
+        // Card Flip Functionality
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // Modal Lightbox Functionality
+        function openModal(imgSrc, caption) {
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('modal-caption').innerText = caption;
+            document.getElementById('image-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').classList.add('hidden');
+        }
+
+        // Confetti & Reveal Surprise Effect
+        function triggerSurprise() {
+            playCuteSound();
+            createTulipBurst();
+
+            // Fire Confetti
+            const count = 350;
+            const defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 35, startVelocity: 60, colors: ['#f43f5e', '#fb7185', '#ffffff'] });
+            fire(0.2, { spread: 70, colors: ['#eab308', '#fde047', '#f43f5e'] });
+            fire(0.35, { spread: 110, decay: 0.91, scalar: 0.9 });
+            fire(0.1, { spread: 130, startVelocity: 30, decay: 0.92, colors: ['#be123c', '#fda4af'] });
+            fire(0.1, { spread: 130, startVelocity: 50 });
+
+            // Reveal Gallery Section
+            const gallery = document.getElementById('gallery-section');
+            gallery.classList.remove('hidden');
+
+            // Initialize Continuous Fade In / Fade Out Scroll Observer
+            initScrollObserver();
+
+            // Smooth Scroll to Gallery
+            setTimeout(() => {
+                gallery.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        // Continuous Intersection Observer (Fade In when entering, Fade Out when leaving)
+        function initScrollObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, { 
+                threshold: 0.25,
+                rootMargin: "-20px 0px -20px 0px"
+            });
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        }
+
+        // Synthesizer Audio Sound Effect
+        function playCuteSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const audioCtx = new AudioContext();
+                
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, index) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime + index * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.1 + 0.3);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    
+                    osc.start(audioCtx.currentTime + index * 0.1);
+                    osc.stop(audioCtx.currentTime + index * 0.1 + 0.3);
+                });
+            } catch(e) {
+                console.log("Audio ready");
+            }
+        }
+
+        // Background Music Toggle
+        let isMusicPlaying = false;
+        const musicBtn = document.getElementById('bgm-toggle');
+        const musicIcon = document.getElementById('music-icon');
+
+        musicBtn.addEventListener('click', () => {
+            isMusicPlaying = !isMusicPlaying;
+            if (isMusicPlaying) {
+                musicIcon.className = "fas fa-heart text-rose-500 animate-pulse";
+                playSoftChimeLoop();
+            } else {
+                musicIcon.className = "fas fa-music text-rose-600";
+            }
+        });
+
+        function playSoftChimeLoop() {
+            if (!isMusicPlaying) return;
+            playCuteSound();
+            setTimeout(playSoftChimeLoop, 4000);
+        }
+    </script>
+</body>
+</html>
